@@ -1,0 +1,13 @@
+1. Create db "project_management_tool" using either compass or in cmd window
+#list available dbs
+>show dbs
+#connect to project_management_tool
+> use project_management_tool
+#execute following script for creating new user
+> db.createUser(
+    {
+      user: "sid",
+      pwd: "pmt@sid",
+      roles: [ "dbOwner" ]
+    }
+

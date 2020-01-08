@@ -1,0 +1,4 @@
+#Proxy configuration for git
+> git config --global http.proxy http://proxyUserId:proxyPassword@proxyServer:proxyPort
+#Proxy configuration for Maven
+> mvn clean install -DproxySet=true -DproxyHost=proxyServer -DproxyPort=proxyPort
