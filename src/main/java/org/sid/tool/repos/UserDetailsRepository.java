@@ -1,6 +1,5 @@
 package org.sid.tool.repos;
 
-import org.bson.types.ObjectId;
 import org.sid.tool.models.UserDetail;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -17,5 +16,5 @@ public interface UserDetailsRepository extends MongoRepository<UserDetail, Strin
 
     UserDetail findByUserName(String userName);
 
-    UserDetail findBy_id(ObjectId id);
+    UserDetail findBy_id(String id);
 }

@@ -4,16 +4,18 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.sid.tool.customexception.ProjectModificationException;
 import org.sid.tool.customexception.ProjectNotFoundException;
+import org.sid.tool.customexception.UserNotFoundException;
+import org.sid.tool.likes.services.LikesServices;
 import org.sid.tool.models.ProjectDetails;
+import org.sid.tool.models.UserDetail;
 import org.sid.tool.projects.services.ProjectDetailsService;
+import org.sid.tool.user.services.UserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,12 +28,20 @@ public class ProjectDetailsController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
     private final ProjectDetailsService detailsService;
 
-    public ProjectDetailsController(ProjectDetailsService detailsService) {
+    private final LikesServices likesServices;
+
+    private final UserDetailsService userDetailsService;
+
+    public ProjectDetailsController(ProjectDetailsService detailsService, LikesServices likesServices, UserDetailsService userDetailsService) {
         this.detailsService = detailsService;
+        this.likesServices = likesServices;
+        this.userDetailsService = userDetailsService;
     }
+
+    @Autowired
+
 
     @GetMapping(value = "/projects/list", produces = "application/json")
     @ApiOperation(value = "List all projects",
@@ -55,19 +65,13 @@ public class ProjectDetailsController {
     @ApiOperation(value = "Add new project",
             notes = "", response = ProjectDetails.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully added new project", response = ProjectDetails.class),
+            @ApiResponse(code = 201, message = "Successfully added new project", response = ProjectDetails.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
     public ResponseEntity<ProjectDetails> createNewProject(@Valid @RequestBody ProjectDetails projectDetails) {
-        if (!StringUtils.isEmpty(projectDetails.get_id())) {
-            ProjectDetails oldProject = detailsService.getProjectById(projectDetails.get_id());
-            if (oldProject != null) {
-                throw new ProjectModificationException("project with this id is already exist-" + projectDetails.get_id());
-            }
-        }
         return new ResponseEntity<>(detailsService.createNewProject(projectDetails), HttpStatus.CREATED);
     }
 
@@ -92,7 +96,7 @@ public class ProjectDetailsController {
     }
 
     @GetMapping(value = "/projects", produces = "application/json")
-    @ApiOperation(value = "Search projects on search criteria",
+    @ApiOperation(value = "Search projects",
             notes = "", response = List.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Projects found for the given criteria", response = ProjectDetails.class, responseContainer = "List"),
@@ -108,5 +112,31 @@ public class ProjectDetailsController {
         } else {
             return new ResponseEntity<>(projectDetailsList, HttpStatus.OK);
         }
+    }
+
+    @GetMapping(value = "/projects/{projectId}", produces = "application/json")
+    @ApiOperation(value = "Search project by id",
+            notes = "", response = List.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved the project", response = ProjectDetails.class, responseContainer = "List"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
+    public ResponseEntity<ProjectDetails> getProjectById(@PathVariable String projectId, @RequestParam String userId) {
+        UserDetail userDetail = userDetailsService.findUserById(userId);
+        if (userDetail == null) {
+            throw new UserNotFoundException("User not found for the give id-" + userId);
+        } else {
+            ProjectDetails projectDetails = detailsService.getProjectById(projectId);
+            if (projectDetails == null) {
+                throw new ProjectNotFoundException("project not found for the given id-" + projectId);
+            } else {
+                projectDetails.setLikesCount(likesServices.countProjectLikes(projectId));
+                return new ResponseEntity<>(projectDetails, HttpStatus.OK);
+            }
+        }
+
     }
 }

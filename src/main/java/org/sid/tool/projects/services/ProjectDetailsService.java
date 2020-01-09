@@ -15,4 +15,6 @@ public interface ProjectDetailsService {
     void deleteProjectById(String id);
 
     List<ProjectDetails> searchProjects(String searchStr);
+
+    void updateProjectDetails(ProjectDetails projectDetails);
 }

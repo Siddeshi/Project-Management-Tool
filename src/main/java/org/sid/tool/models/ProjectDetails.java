@@ -41,7 +41,7 @@ public class ProjectDetails implements Serializable {
     private List<ProjectDocument> projectDocuments;
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
-    private List<Like> likes;
+    //private List<Like> likes;
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
     //private List<ProductBacklog> productBacklogs;
@@ -67,7 +67,7 @@ public class ProjectDetails implements Serializable {
         this.milestones = milestones;
         this.comments = comments;
         this.projectDocuments = projectDocuments;
-        this.likes = likes;
+        //this.likes = likes;
     }
 
     public String get_id() {
@@ -158,13 +158,13 @@ public class ProjectDetails implements Serializable {
         this.projectDocuments = projectDocuments;
     }
 
-    public List<Like> getLikes() {
+    /*public List<Like> getLikes() {
         return likes;
     }
 
     public void setLikes(List<Like> likes) {
         this.likes = likes;
-    }
+    }*/
 
     public long getCommentsCount() {
         return commentsCount;

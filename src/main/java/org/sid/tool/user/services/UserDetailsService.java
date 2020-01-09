@@ -1,18 +1,19 @@
 package org.sid.tool.user.services;
 
-import org.bson.types.ObjectId;
 import org.sid.tool.models.UserDetail;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface UserDetailsService {
 
-    ResponseEntity<UserDetail> findUserDetailsByName(String userName);
+    UserDetail findUserDetailsByName(String userName);
 
-    ResponseEntity<UserDetail> findUserById(ObjectId id);
+    UserDetail findUserById(String id);
 
-    ResponseEntity<List<UserDetail>> fetchAllUserDetails();
+    List<UserDetail> fetchAllUserDetails();
 
-    ResponseEntity<Object> createNewUser(UserDetail userDetails);
+    UserDetail createNewUser(UserDetail userDetails);
+
+    void deleteUser(String id);
+
 }

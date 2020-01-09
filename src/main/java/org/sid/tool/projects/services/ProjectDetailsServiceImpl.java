@@ -1,5 +1,6 @@
 package org.sid.tool.projects.services;
 
+import org.sid.tool.customexception.ProjectNotFoundException;
 import org.sid.tool.models.ProjectDetails;
 import org.sid.tool.repos.ProjectDetailsRepository;
 import org.slf4j.Logger;
@@ -62,5 +63,15 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
         query.addCriteria(Criteria.where("projectName").regex(searchStr));
         List<ProjectDetails> projectDetailsList = mongoTemplate.find(query, ProjectDetails.class);
         return projectDetailsList;
+    }
+
+    @Override
+    public void updateProjectDetails(ProjectDetails projectDetails) {
+        ProjectDetails updateProject = this.getProjectById(projectDetails.get_id());
+        if (updateProject != null) {
+            projectDetailsRepository.save(projectDetails);
+        } else {
+            throw new ProjectNotFoundException("Project not found for the id-" + projectDetails.get_id());
+        }
     }
 }
