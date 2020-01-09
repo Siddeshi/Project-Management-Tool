@@ -1,9 +1,8 @@
 package org.sid.tool.models;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
@@ -12,28 +11,36 @@ import java.io.Serializable;
 public class Like implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String likeId;
+    private ObjectId _id;
 
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "_id")
     private ProjectDetails projectDetails;
 
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "_id")
     private UserDetail userDetail;
 
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "_id")
     private ProductBacklog productBacklog;
 
-    public Like(String likeId, ProjectDetails projectDetails, UserDetail userDetail, ProductBacklog productBacklog) {
-        this.likeId = likeId;
+    public Like() {
+    }
+
+    public Like(ObjectId _id, ProjectDetails projectDetails, UserDetail userDetail, ProductBacklog productBacklog) {
+        this._id = _id;
         this.projectDetails = projectDetails;
         this.userDetail = userDetail;
         this.productBacklog = productBacklog;
     }
 
-    public String getLikeId() {
-        return likeId;
+    public String get_id() {
+        return _id.toHexString();
     }
 
-    public void setLikeId(String likeId) {
-        this.likeId = likeId;
+    public void set_id(ObjectId _id) {
+        this._id = _id;
     }
 
     public ProjectDetails getProjectDetails() {
@@ -59,4 +66,5 @@ public class Like implements Serializable {
     public void setProductBacklog(ProductBacklog productBacklog) {
         this.productBacklog = productBacklog;
     }
+
 }

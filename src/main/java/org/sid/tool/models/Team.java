@@ -1,8 +1,9 @@
 package org.sid.tool.models;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,24 +11,28 @@ import java.util.List;
 public class Team implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String teamId;
+    private ObjectId _id;
 
     private String teamName;
 
     private String teamDesc;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "projectId")
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "_id")
     private ProjectDetails projectDetails;
 
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "team", cascade = CascadeType.ALL)
     private List<UserDetail> userDetail;
 
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "team", cascade = CascadeType.ALL)
     private List<ProductBacklog> productBacklogs;
 
-    public Team(String teamId, String teamName, String teamDesc,
-                ProjectDetails projectDetails, List<UserDetail> userDetail, List<ProductBacklog> productBacklogs) {
-        this.teamId = teamId;
+    public Team() {
+    }
+
+    public Team(ObjectId _id, String teamName, String teamDesc, ProjectDetails projectDetails, List<UserDetail> userDetail,
+                List<ProductBacklog> productBacklogs) {
+        this._id = _id;
         this.teamName = teamName;
         this.teamDesc = teamDesc;
         this.projectDetails = projectDetails;
@@ -35,12 +40,12 @@ public class Team implements Serializable {
         this.productBacklogs = productBacklogs;
     }
 
-    public String getTeamId() {
-        return teamId;
+    public String get_id() {
+        return _id.toHexString();
     }
 
-    public void setTeamId(String teamId) {
-        this.teamId = teamId;
+    public void set_id(ObjectId _id) {
+        this._id = _id;
     }
 
     public String getTeamName() {
@@ -82,4 +87,5 @@ public class Team implements Serializable {
     public void setUserDetail(List<UserDetail> userDetail) {
         this.userDetail = userDetail;
     }
+
 }

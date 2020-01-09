@@ -1,5 +1,6 @@
 package org.sid.tool.models;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,45 +9,42 @@ import java.io.Serializable;
 @Document
 public class Task implements Serializable {
 
-    Timeline timeline;
     @Id
-    private String taskId;
-    private String featureId;
-    private String userId;
+    private ObjectId _id;
     private String taskName;
     private String taskDesc;
 
-    public Task(String taskId, String featureId, String userId, String taskName, String taskDesc, Timeline timeline) {
-        this.taskId = taskId;
-        this.featureId = featureId;
-        this.userId = userId;
+    //@OneToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(unique = true)
+    private Timeline timeline;
+
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "_id")
+    private UserDetail userDetail;
+
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "_id")
+    private ProductBacklog productBacklog;
+
+    public Task() {
+    }
+
+    public Task(ObjectId _id, String taskName, String taskDesc, Timeline timeline, UserDetail userDetail,
+                ProductBacklog productBacklog) {
+        this._id = _id;
         this.taskName = taskName;
         this.taskDesc = taskDesc;
         this.timeline = timeline;
+        this.userDetail = userDetail;
+        this.productBacklog = productBacklog;
     }
 
-    public String getTaskId() {
-        return taskId;
+    public String get_id() {
+        return _id.toHexString();
     }
 
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-
-    public String getFeatureId() {
-        return featureId;
-    }
-
-    public void setFeatureId(String featureId) {
-        this.featureId = featureId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void set_id(ObjectId _id) {
+        this._id = _id;
     }
 
     public String getTaskName() {
@@ -71,5 +69,21 @@ public class Task implements Serializable {
 
     public void setTimeline(Timeline timeline) {
         this.timeline = timeline;
+    }
+
+    public UserDetail getUserDetail() {
+        return userDetail;
+    }
+
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
+    }
+
+    public ProductBacklog getProductBacklog() {
+        return productBacklog;
+    }
+
+    public void setProductBacklog(ProductBacklog productBacklog) {
+        this.productBacklog = productBacklog;
     }
 }

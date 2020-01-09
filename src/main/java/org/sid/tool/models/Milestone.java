@@ -1,5 +1,6 @@
 package org.sid.tool.models;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,42 +11,42 @@ import java.util.List;
 public class Milestone implements Serializable {
 
     @Id
-    private String milestoneId;
-
-    private String projectId;
+    private ObjectId _id;
 
     private String milestoneName;
 
     private String milestoneDesc;
 
+    //@OneToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(unique = true)
     private Timeline timeline;
 
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "milestone", cascade = CascadeType.ALL)
     private List<ProductBacklog> productBacklogs;
 
-    public Milestone(String milestoneId, String projectId, String milestoneName, String milestoneDesc,
-                     Timeline timeline, List<ProductBacklog> productBacklogs) {
-        this.milestoneId = milestoneId;
-        this.projectId = projectId;
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "_id")
+    private ProjectDetails projectDetails;
+
+    public Milestone() {
+    }
+
+    public Milestone(ObjectId _id, String milestoneName, String milestoneDesc, Timeline timeline,
+                     List<ProductBacklog> productBacklogs, ProjectDetails projectDetails) {
+        this._id = _id;
         this.milestoneName = milestoneName;
         this.milestoneDesc = milestoneDesc;
         this.timeline = timeline;
         this.productBacklogs = productBacklogs;
+        this.projectDetails = projectDetails;
     }
 
-    public String getMilestoneId() {
-        return milestoneId;
+    public String get_id() {
+        return _id.toHexString();
     }
 
-    public void setMilestoneId(String milestoneId) {
-        this.milestoneId = milestoneId;
-    }
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
+    public void set_id(ObjectId _id) {
+        this._id = _id;
     }
 
     public String getMilestoneName() {
@@ -78,5 +79,13 @@ public class Milestone implements Serializable {
 
     public void setProductBacklogs(List<ProductBacklog> productBacklogs) {
         this.productBacklogs = productBacklogs;
+    }
+
+    public ProjectDetails getProjectDetails() {
+        return projectDetails;
+    }
+
+    public void setProjectDetails(ProjectDetails projectDetails) {
+        this.projectDetails = projectDetails;
     }
 }

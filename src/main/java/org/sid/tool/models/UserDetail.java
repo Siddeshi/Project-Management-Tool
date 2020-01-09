@@ -10,32 +10,42 @@ import java.util.List;
 @Document
 public class UserDetail implements Serializable {
 
-    List<Comment> comments;
-    Team team;
-    List<Task> tasks;
+
     @Id
     private ObjectId _id;
-    private String teamId;
     private String userName;
     private String designation;
     private long phone;
     private String email;
     private String address;
 
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "_id")
+    private Team team;
+
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "userDetail", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "userDetail", cascade = CascadeType.ALL)
+    private List<Like> likes;
+
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "userDetail", cascade = CascadeType.ALL)
+    private List<Task> tasks;
+
     public UserDetail() {
     }
 
-    public UserDetail(ObjectId _id, String teamId, String userName, String designation, long phone, String email,
-                      String address, List<Comment> comments, Team team, List<Task> tasks) {
+    public UserDetail(ObjectId _id, String userName, String designation, long phone, String email,
+                      String address, Team team, List<Comment> comments, List<Like> likes, List<Task> tasks) {
         this._id = _id;
-        this.teamId = teamId;
         this.userName = userName;
         this.designation = designation;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.comments = comments;
         this.team = team;
+        this.comments = comments;
+        this.likes = likes;
         this.tasks = tasks;
     }
 
@@ -45,14 +55,6 @@ public class UserDetail implements Serializable {
 
     public void set_id(ObjectId _id) {
         this._id = _id;
-    }
-
-    public String getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(String teamId) {
-        this.teamId = teamId;
     }
 
     public String getUserName() {
@@ -117,5 +119,13 @@ public class UserDetail implements Serializable {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
     }
 }

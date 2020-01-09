@@ -1,11 +1,9 @@
 package org.sid.tool.models;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
@@ -14,7 +12,7 @@ import java.util.List;
 public class ProjectDetails implements Serializable {
 
     @Id
-    private String projectId;
+    private ObjectId _id;
 
     private String projectName;
 
@@ -28,19 +26,32 @@ public class ProjectDetails implements Serializable {
 
     private long likesCount;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
     private List<Team> teams;
 
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
     private List<Milestone> milestones;
 
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
     private List<ProjectDocument> projectDocuments;
 
-    public ProjectDetails(String projectId, String projectName, String projectDesc, Date projectStartDate,
-                          Date projectEndDate, String projectStatus, long likesCount, List<Team> teams,
-                          List<Milestone> milestones, List<Comment> comments, List<ProjectDocument> projectDocuments) {
-        this.projectId = projectId;
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
+    private List<Like> likes;
+
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
+    private List<ProductBacklog> productBacklogs;
+
+    public ProjectDetails() {
+    }
+
+    public ProjectDetails(ObjectId _id, String projectName, String projectDesc, Date projectStartDate, Date projectEndDate,
+                          String projectStatus, long likesCount, List<Team> teams, List<Milestone> milestones,
+                          List<Comment> comments, List<ProjectDocument> projectDocuments, List<Like> likes,
+                          List<ProductBacklog> productBacklogs) {
+        this._id = _id;
         this.projectName = projectName;
         this.projectDesc = projectDesc;
         this.projectStartDate = projectStartDate;
@@ -51,14 +62,16 @@ public class ProjectDetails implements Serializable {
         this.milestones = milestones;
         this.comments = comments;
         this.projectDocuments = projectDocuments;
+        this.likes = likes;
+        this.productBacklogs = productBacklogs;
     }
 
-    public String getProjectId() {
-        return projectId;
+    public ObjectId get_id() {
+        return _id;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
+    public void set_id(ObjectId _id) {
+        this._id = _id;
     }
 
     public String getProjectName() {
@@ -139,5 +152,21 @@ public class ProjectDetails implements Serializable {
 
     public void setProjectDocuments(List<ProjectDocument> projectDocuments) {
         this.projectDocuments = projectDocuments;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
+    public List<ProductBacklog> getProductBacklogs() {
+        return productBacklogs;
+    }
+
+    public void setProductBacklogs(List<ProductBacklog> productBacklogs) {
+        this.productBacklogs = productBacklogs;
     }
 }
