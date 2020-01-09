@@ -17,6 +17,10 @@ public class ProductBacklog implements Serializable {
 
     private String featureDesc;
 
+    private long likesCount;
+
+    private long commentsCount;
+
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "productBacklog", cascade = CascadeType.ALL)
     private List<ProjectDocument> projectDocuments;
 
@@ -41,11 +45,14 @@ public class ProductBacklog implements Serializable {
     public ProductBacklog() {
     }
 
-    public ProductBacklog(ObjectId _id, String featureName, String featureDesc, List<ProjectDocument> projectDocuments,
-                          List<Task> tasks, List<Comment> comments) {
+    public ProductBacklog(ObjectId _id, String featureName, String featureDesc, long likesCount,
+                          long commentsCount, List<ProjectDocument> projectDocuments, List<Task> tasks,
+                          List<Comment> comments) {
         this._id = _id;
         this.featureName = featureName;
         this.featureDesc = featureDesc;
+        this.likesCount = likesCount;
+        this.commentsCount = commentsCount;
         this.projectDocuments = projectDocuments;
         this.tasks = tasks;
         this.comments = comments;
@@ -97,5 +104,21 @@ public class ProductBacklog implements Serializable {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public long getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(long likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public long getCommentsCount() {
+        return commentsCount;
+    }
+
+    public void setCommentsCount(long commentsCount) {
+        this.commentsCount = commentsCount;
     }
 }
