@@ -20,23 +20,20 @@ public class ProjectDocument implements Serializable {
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private ProjectDetails projectDetails;
+    //private ProjectDetails projectDetails;
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private ProductBacklog productBacklog;
+    //private ProductBacklog productBacklog;
 
     public ProjectDocument() {
     }
 
-    public ProjectDocument(ObjectId _id, String docName, String docType, byte[] document,
-                           ProjectDetails projectDetails, ProductBacklog productBacklog) {
+    public ProjectDocument(ObjectId _id, String docName, String docType, byte[] document) {
         this._id = _id;
         this.docName = docName;
         this.docType = docType;
         this.document = document;
-        this.projectDetails = projectDetails;
-        this.productBacklog = productBacklog;
     }
 
     public String get_id() {
@@ -69,21 +66,5 @@ public class ProjectDocument implements Serializable {
 
     public void setDocument(byte[] document) {
         this.document = document;
-    }
-
-    public ProjectDetails getProjectDetails() {
-        return projectDetails;
-    }
-
-    public void setProjectDetails(ProjectDetails projectDetails) {
-        this.projectDetails = projectDetails;
-    }
-
-    public ProductBacklog getProductBacklog() {
-        return productBacklog;
-    }
-
-    public void setProductBacklog(ProductBacklog productBacklog) {
-        this.productBacklog = productBacklog;
     }
 }

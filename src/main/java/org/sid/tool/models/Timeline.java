@@ -18,20 +18,18 @@ public class Timeline implements Serializable {
     private Date periodTo;
 
     //@OneToOne(mappedBy = "timeline")
-    private Milestone milestone;
+    //private Milestone milestone;
 
     //@OneToOne(mappedBy = "timeline")
-    private Task task;
+    //private Task task;
 
     public Timeline() {
     }
 
-    public Timeline(ObjectId _id, Date periodFrom, Date periodTo, Milestone milestone, Task task) {
+    public Timeline(ObjectId _id, Date periodFrom, Date periodTo) {
         this._id = _id;
         this.periodFrom = periodFrom;
         this.periodTo = periodTo;
-        this.milestone = milestone;
-        this.task = task;
     }
 
     public ObjectId get_id() {
@@ -57,21 +55,4 @@ public class Timeline implements Serializable {
     public void setPeriodTo(Date periodTo) {
         this.periodTo = periodTo;
     }
-
-    public Milestone getMilestone() {
-        return milestone;
-    }
-
-    public void setMilestone(Milestone milestone) {
-        this.milestone = milestone;
-    }
-
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
-    }
-
 }

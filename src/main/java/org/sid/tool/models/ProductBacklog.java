@@ -25,15 +25,15 @@ public class ProductBacklog implements Serializable {
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private ProjectDetails projectDetails;
+    //private ProjectDetails projectDetails;
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private Team team;
+    //private Team team;
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private Milestone milestone;
+    //private Milestone milestone;
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "productBacklog", cascade = CascadeType.ALL)
     private List<Comment> comments;
@@ -42,15 +42,12 @@ public class ProductBacklog implements Serializable {
     }
 
     public ProductBacklog(ObjectId _id, String featureName, String featureDesc, List<ProjectDocument> projectDocuments,
-                          List<Task> tasks, ProjectDetails projectDetails, Team team, Milestone milestone, List<Comment> comments) {
+                          List<Task> tasks, List<Comment> comments) {
         this._id = _id;
         this.featureName = featureName;
         this.featureDesc = featureDesc;
         this.projectDocuments = projectDocuments;
         this.tasks = tasks;
-        this.projectDetails = projectDetails;
-        this.team = team;
-        this.milestone = milestone;
         this.comments = comments;
     }
 
@@ -92,30 +89,6 @@ public class ProductBacklog implements Serializable {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
-    }
-
-    public ProjectDetails getProjectDetails() {
-        return projectDetails;
-    }
-
-    public void setProjectDetails(ProjectDetails projectDetails) {
-        this.projectDetails = projectDetails;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-    public Milestone getMilestone() {
-        return milestone;
-    }
-
-    public void setMilestone(Milestone milestone) {
-        this.milestone = milestone;
     }
 
     public List<Comment> getComments() {

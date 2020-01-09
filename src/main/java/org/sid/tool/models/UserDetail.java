@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.List;
 
 @Document
 public class UserDetail implements Serializable {
@@ -21,32 +20,28 @@ public class UserDetail implements Serializable {
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private Team team;
+    //private Team team;
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "userDetail", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    //private List<Comment> comments;
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "userDetail", cascade = CascadeType.ALL)
-    private List<Like> likes;
+    //private List<Like> likes;
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "userDetail", cascade = CascadeType.ALL)
-    private List<Task> tasks;
+    //private List<Task> tasks;
 
     public UserDetail() {
     }
 
     public UserDetail(ObjectId _id, String userName, String designation, long phone, String email,
-                      String address, Team team, List<Comment> comments, List<Like> likes, List<Task> tasks) {
+                      String address) {
         this._id = _id;
         this.userName = userName;
         this.designation = designation;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.team = team;
-        this.comments = comments;
-        this.likes = likes;
-        this.tasks = tasks;
     }
 
     public String get_id() {
@@ -95,37 +90,5 @@ public class UserDetail implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    public List<Like> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(List<Like> likes) {
-        this.likes = likes;
     }
 }

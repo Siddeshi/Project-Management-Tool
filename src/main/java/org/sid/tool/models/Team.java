@@ -19,25 +19,22 @@ public class Team implements Serializable {
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private ProjectDetails projectDetails;
+    //private ProjectDetails projectDetails;
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "team", cascade = CascadeType.ALL)
     private List<UserDetail> userDetail;
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "team", cascade = CascadeType.ALL)
-    private List<ProductBacklog> productBacklogs;
+    //private List<ProductBacklog> productBacklogs;
 
     public Team() {
     }
 
-    public Team(ObjectId _id, String teamName, String teamDesc, ProjectDetails projectDetails, List<UserDetail> userDetail,
-                List<ProductBacklog> productBacklogs) {
+    public Team(ObjectId _id, String teamName, String teamDesc, List<UserDetail> userDetail) {
         this._id = _id;
         this.teamName = teamName;
         this.teamDesc = teamDesc;
-        this.projectDetails = projectDetails;
         this.userDetail = userDetail;
-        this.productBacklogs = productBacklogs;
     }
 
     public String get_id() {
@@ -62,22 +59,6 @@ public class Team implements Serializable {
 
     public void setTeamDesc(String teamDesc) {
         this.teamDesc = teamDesc;
-    }
-
-    public ProjectDetails getProjectDetails() {
-        return projectDetails;
-    }
-
-    public void setProjectDetails(ProjectDetails projectDetails) {
-        this.projectDetails = projectDetails;
-    }
-
-    public List<ProductBacklog> getProductBacklogs() {
-        return productBacklogs;
-    }
-
-    public void setProductBacklogs(List<ProductBacklog> productBacklogs) {
-        this.productBacklogs = productBacklogs;
     }
 
     public List<UserDetail> getUserDetail() {

@@ -17,9 +17,9 @@ public class UserDetailsController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    @Autowired
     private final UserDetailsService userDetailsService;
 
-    @Autowired
     public UserDetailsController(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }

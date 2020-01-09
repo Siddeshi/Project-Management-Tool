@@ -26,19 +26,18 @@ public class Milestone implements Serializable {
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private ProjectDetails projectDetails;
+    //private ProjectDetails projectDetails;
 
     public Milestone() {
     }
 
     public Milestone(ObjectId _id, String milestoneName, String milestoneDesc, Timeline timeline,
-                     List<ProductBacklog> productBacklogs, ProjectDetails projectDetails) {
+                     List<ProductBacklog> productBacklogs) {
         this._id = _id;
         this.milestoneName = milestoneName;
         this.milestoneDesc = milestoneDesc;
         this.timeline = timeline;
         this.productBacklogs = productBacklogs;
-        this.projectDetails = projectDetails;
     }
 
     public String get_id() {
@@ -79,13 +78,5 @@ public class Milestone implements Serializable {
 
     public void setProductBacklogs(List<ProductBacklog> productBacklogs) {
         this.productBacklogs = productBacklogs;
-    }
-
-    public ProjectDetails getProjectDetails() {
-        return projectDetails;
-    }
-
-    public void setProjectDetails(ProjectDetails projectDetails) {
-        this.projectDetails = projectDetails;
     }
 }

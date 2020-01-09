@@ -19,27 +19,23 @@ public class Comment implements Serializable {
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private ProjectDetails projectDetails;
+    //private ProjectDetails projectDetails;
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private UserDetail userDetail;
+    //private UserDetail userDetail;
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private ProductBacklog productBacklog;
+    //private ProductBacklog productBacklog;
 
     public Comment() {
     }
 
-    public Comment(ObjectId _id, String comment, Date dateOfComment,
-                   ProjectDetails projectDetails, UserDetail userDetail, ProductBacklog productBacklog) {
+    public Comment(ObjectId _id, String comment, Date dateOfComment) {
         this._id = _id;
         this.comment = comment;
         this.dateOfComment = dateOfComment;
-        this.projectDetails = projectDetails;
-        this.userDetail = userDetail;
-        this.productBacklog = productBacklog;
     }
 
     public ObjectId get_id() {
@@ -64,29 +60,5 @@ public class Comment implements Serializable {
 
     public void setDateOfComment(Date dateOfComment) {
         this.dateOfComment = dateOfComment;
-    }
-
-    public ProjectDetails getProjectDetails() {
-        return projectDetails;
-    }
-
-    public void setProjectDetails(ProjectDetails projectDetails) {
-        this.projectDetails = projectDetails;
-    }
-
-    public UserDetail getUserDetail() {
-        return userDetail;
-    }
-
-    public void setUserDetail(UserDetail userDetail) {
-        this.userDetail = userDetail;
-    }
-
-    public ProductBacklog getProductBacklog() {
-        return productBacklog;
-    }
-
-    public void setProductBacklog(ProductBacklog productBacklog) {
-        this.productBacklog = productBacklog;
     }
 }

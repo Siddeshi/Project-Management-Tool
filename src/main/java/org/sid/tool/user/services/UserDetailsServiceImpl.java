@@ -15,9 +15,9 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    @Autowired
     private final UserDetailsRepository userDetailsRepo;
 
-    @Autowired
     public UserDetailsServiceImpl(UserDetailsRepository userDetailsRepo) {
         this.userDetailsRepo = userDetailsRepo;
     }

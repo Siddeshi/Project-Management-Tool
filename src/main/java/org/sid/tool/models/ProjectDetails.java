@@ -26,6 +26,8 @@ public class ProjectDetails implements Serializable {
 
     private long likesCount;
 
+    private long commentsCount;
+
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
     private List<Team> teams;
 
@@ -42,15 +44,17 @@ public class ProjectDetails implements Serializable {
     private List<Like> likes;
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
-    private List<ProductBacklog> productBacklogs;
+    //private List<ProductBacklog> productBacklogs;
 
     public ProjectDetails() {
     }
 
-    public ProjectDetails(ObjectId _id, String projectName, String projectDesc, Date projectStartDate, Date projectEndDate,
-                          String projectStatus, long likesCount, List<Team> teams, List<Milestone> milestones,
-                          List<Comment> comments, List<ProjectDocument> projectDocuments, List<Like> likes,
-                          List<ProductBacklog> productBacklogs) {
+    public ProjectDetails(ObjectId _id, String projectName, String projectDesc,
+                          Date projectStartDate, Date projectEndDate,
+                          String projectStatus, long likesCount, long commentsCount,
+                          List<Team> teams, List<Milestone> milestones,
+                          List<Comment> comments, List<ProjectDocument> projectDocuments,
+                          List<Like> likes) {
         this._id = _id;
         this.projectName = projectName;
         this.projectDesc = projectDesc;
@@ -58,16 +62,16 @@ public class ProjectDetails implements Serializable {
         this.projectEndDate = projectEndDate;
         this.projectStatus = projectStatus;
         this.likesCount = likesCount;
+        this.commentsCount = commentsCount;
         this.teams = teams;
         this.milestones = milestones;
         this.comments = comments;
         this.projectDocuments = projectDocuments;
         this.likes = likes;
-        this.productBacklogs = productBacklogs;
     }
 
-    public ObjectId get_id() {
-        return _id;
+    public String get_id() {
+        return _id.toHexString();
     }
 
     public void set_id(ObjectId _id) {
@@ -162,11 +166,11 @@ public class ProjectDetails implements Serializable {
         this.likes = likes;
     }
 
-    public List<ProductBacklog> getProductBacklogs() {
-        return productBacklogs;
+    public long getCommentsCount() {
+        return commentsCount;
     }
 
-    public void setProductBacklogs(List<ProductBacklog> productBacklogs) {
-        this.productBacklogs = productBacklogs;
+    public void setCommentsCount(long commentsCount) {
+        this.commentsCount = commentsCount;
     }
 }

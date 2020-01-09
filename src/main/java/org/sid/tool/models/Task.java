@@ -20,23 +20,20 @@ public class Task implements Serializable {
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private UserDetail userDetail;
+    //private UserDetail userDetail;
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private ProductBacklog productBacklog;
+    //private ProductBacklog productBacklog;
 
     public Task() {
     }
 
-    public Task(ObjectId _id, String taskName, String taskDesc, Timeline timeline, UserDetail userDetail,
-                ProductBacklog productBacklog) {
+    public Task(ObjectId _id, String taskName, String taskDesc, Timeline timeline) {
         this._id = _id;
         this.taskName = taskName;
         this.taskDesc = taskDesc;
         this.timeline = timeline;
-        this.userDetail = userDetail;
-        this.productBacklog = productBacklog;
     }
 
     public String get_id() {
@@ -69,21 +66,5 @@ public class Task implements Serializable {
 
     public void setTimeline(Timeline timeline) {
         this.timeline = timeline;
-    }
-
-    public UserDetail getUserDetail() {
-        return userDetail;
-    }
-
-    public void setUserDetail(UserDetail userDetail) {
-        this.userDetail = userDetail;
-    }
-
-    public ProductBacklog getProductBacklog() {
-        return productBacklog;
-    }
-
-    public void setProductBacklog(ProductBacklog productBacklog) {
-        this.productBacklog = productBacklog;
     }
 }

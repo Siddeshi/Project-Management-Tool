@@ -15,24 +15,21 @@ public class Like implements Serializable {
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private ProjectDetails projectDetails;
+    //private ProjectDetails projectDetails;
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private UserDetail userDetail;
+    //private UserDetail userDetail;
 
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "_id")
-    private ProductBacklog productBacklog;
+    //private ProductBacklog productBacklog;
 
     public Like() {
     }
 
-    public Like(ObjectId _id, ProjectDetails projectDetails, UserDetail userDetail, ProductBacklog productBacklog) {
+    public Like(ObjectId _id) {
         this._id = _id;
-        this.projectDetails = projectDetails;
-        this.userDetail = userDetail;
-        this.productBacklog = productBacklog;
     }
 
     public String get_id() {
@@ -42,29 +39,4 @@ public class Like implements Serializable {
     public void set_id(ObjectId _id) {
         this._id = _id;
     }
-
-    public ProjectDetails getProjectDetails() {
-        return projectDetails;
-    }
-
-    public void setProjectDetails(ProjectDetails projectDetails) {
-        this.projectDetails = projectDetails;
-    }
-
-    public UserDetail getUserDetail() {
-        return userDetail;
-    }
-
-    public void setUserDetail(UserDetail userDetail) {
-        this.userDetail = userDetail;
-    }
-
-    public ProductBacklog getProductBacklog() {
-        return productBacklog;
-    }
-
-    public void setProductBacklog(ProductBacklog productBacklog) {
-        this.productBacklog = productBacklog;
-    }
-
 }
