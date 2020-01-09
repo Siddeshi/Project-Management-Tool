@@ -23,15 +23,13 @@ public class LikesServicesImpl implements LikesServices {
 
     private final ProductBacklogService backlogService;
 
+    @Autowired
     public LikesServicesImpl(LikesRepository likesRepository, ProjectDetailsService projectDetailsService,
                              ProductBacklogService backlogService) {
         this.likesRepository = likesRepository;
         this.projectDetailsService = projectDetailsService;
         this.backlogService = backlogService;
     }
-
-    @Autowired
-
 
     @Override
     public List<Like> getProjectLikesList(String projectId) {
@@ -41,18 +39,6 @@ public class LikesServicesImpl implements LikesServices {
     @Override
     public List<Like> getFeatureLikesList(String featureId) {
         return likesRepository.findByFeatureId(featureId);
-    }
-
-    @Override
-    public long countProjectLikes(String projectId) {
-        List<Like> likes = this.getProjectLikesList(projectId);
-        return likes.size();
-    }
-
-    @Override
-    public long countFeatureLikes(String featureId) {
-        List<Like> likes = this.getFeatureLikesList(featureId);
-        return likes.size();
     }
 
     @Override

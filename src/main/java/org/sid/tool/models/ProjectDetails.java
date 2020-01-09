@@ -35,7 +35,7 @@ public class ProjectDetails implements Serializable {
     private List<Milestone> milestones;
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    //private List<Comment> comments;
 
     //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
     private List<ProjectDocument> projectDocuments;
@@ -49,12 +49,9 @@ public class ProjectDetails implements Serializable {
     public ProjectDetails() {
     }
 
-    public ProjectDetails(ObjectId _id, String projectName, String projectDesc,
-                          Date projectStartDate, Date projectEndDate,
-                          String projectStatus, long likesCount, long commentsCount,
-                          List<Team> teams, List<Milestone> milestones,
-                          List<Comment> comments, List<ProjectDocument> projectDocuments,
-                          List<Like> likes) {
+    public ProjectDetails(ObjectId _id, String projectName, String projectDesc, Date projectStartDate,
+                          Date projectEndDate, String projectStatus, long likesCount, long commentsCount,
+                          List<Team> teams, List<Milestone> milestones, List<ProjectDocument> projectDocuments) {
         this._id = _id;
         this.projectName = projectName;
         this.projectDesc = projectDesc;
@@ -65,9 +62,7 @@ public class ProjectDetails implements Serializable {
         this.commentsCount = commentsCount;
         this.teams = teams;
         this.milestones = milestones;
-        this.comments = comments;
         this.projectDocuments = projectDocuments;
-        //this.likes = likes;
     }
 
     public String get_id() {
@@ -142,14 +137,6 @@ public class ProjectDetails implements Serializable {
         this.milestones = milestones;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
     public List<ProjectDocument> getProjectDocuments() {
         return projectDocuments;
     }
@@ -157,14 +144,6 @@ public class ProjectDetails implements Serializable {
     public void setProjectDocuments(List<ProjectDocument> projectDocuments) {
         this.projectDocuments = projectDocuments;
     }
-
-    /*public List<Like> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(List<Like> likes) {
-        this.likes = likes;
-    }*/
 
     public long getCommentsCount() {
         return commentsCount;

@@ -10,10 +10,6 @@ public interface LikesServices {
 
     List<Like> getFeatureLikesList(String featureId);
 
-    long countProjectLikes(String projectId);
-
-    long countFeatureLikes(String featureId);
-
     String likeProject(String projectId, String userId);
 
     String likeFeature(String featureId, String userId);

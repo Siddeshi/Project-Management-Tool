@@ -133,7 +133,6 @@ public class ProjectDetailsController {
             if (projectDetails == null) {
                 throw new ProjectNotFoundException("project not found for the given id-" + projectId);
             } else {
-                projectDetails.setLikesCount(likesServices.countProjectLikes(projectId));
                 return new ResponseEntity<>(projectDetails, HttpStatus.OK);
             }
         }
