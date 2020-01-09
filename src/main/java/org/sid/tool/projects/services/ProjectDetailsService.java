@@ -1,13 +1,18 @@
 package org.sid.tool.projects.services;
 
 import org.sid.tool.models.ProjectDetails;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface ProjectDetailsService {
 
-    ResponseEntity<List<ProjectDetails>> getAllProjects();
+    ProjectDetails getProjectById(String id);
 
-    ResponseEntity<ProjectDetails> createNewProject(ProjectDetails projectDetails);
+    List<ProjectDetails> getAllProjects();
+
+    ProjectDetails createNewProject(ProjectDetails projectDetails);
+
+    void deleteProjectById(String id);
+
+    List<ProjectDetails> searchProjects(String searchStr);
 }
