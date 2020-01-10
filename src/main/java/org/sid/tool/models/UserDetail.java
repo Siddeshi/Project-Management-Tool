@@ -13,7 +13,7 @@ public class UserDetail implements Serializable {
     @Id
     private ObjectId _id;
     private String userName;
-    private String designation;
+    private String[] roles;
     private long phone;
     private String email;
     private String address;
@@ -34,11 +34,11 @@ public class UserDetail implements Serializable {
     public UserDetail() {
     }
 
-    public UserDetail(ObjectId _id, String userName, String designation, long phone, String email,
-                      String address) {
+    public UserDetail(ObjectId _id, String userName, String[] roles, long phone,
+                      String email, String address) {
         this._id = _id;
         this.userName = userName;
-        this.designation = designation;
+        this.roles = roles;
         this.phone = phone;
         this.email = email;
         this.address = address;
@@ -58,14 +58,6 @@ public class UserDetail implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getDesignation() {
-        return designation;
-    }
-
-    public void setDesignation(String designation) {
-        this.designation = designation;
     }
 
     public long getPhone() {
@@ -90,5 +82,13 @@ public class UserDetail implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String[] getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String[] roles) {
+        this.roles = roles;
     }
 }

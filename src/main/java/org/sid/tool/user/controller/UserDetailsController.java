@@ -134,12 +134,7 @@ public class UserDetailsController {
         if (user == null) {
             throw new UserNotFoundException("User not found for the given id-" + id);
         } else {
-            user.setAddress(userDetail.getAddress());
-            user.setDesignation(userDetail.getDesignation());
-            user.setEmail(userDetail.getEmail());
-            user.setPhone(userDetail.getPhone());
-            user.setUserName(userDetail.getUserName());
-            userDetailsService.createNewUser(user);
+            userDetailsService.createNewUser(userDetail);
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
