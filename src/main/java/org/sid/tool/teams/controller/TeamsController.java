@@ -1,5 +1,6 @@
 package org.sid.tool.teams.controller;
 
+import io.swagger.annotations.Api;
 import org.sid.tool.customexception.TeamModificationException;
 import org.sid.tool.customexception.TeamNotFoundExeption;
 import org.sid.tool.models.Team;
@@ -22,6 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/")
+@Api(value = "tool", description = "Operations pertaining to teams")
 public class TeamsController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());

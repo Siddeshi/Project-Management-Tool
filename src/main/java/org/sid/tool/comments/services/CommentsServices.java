@@ -24,4 +24,8 @@ public interface CommentsServices {
     String deleteProjectComment(String projectId, String commentId);
 
     String deleteFeatureComment(String featureId, String commentId);
+
+    String deleteAllProjectComments(String projectId);
+
+    String deleteAllBacklogComments(String backlogId);
 }

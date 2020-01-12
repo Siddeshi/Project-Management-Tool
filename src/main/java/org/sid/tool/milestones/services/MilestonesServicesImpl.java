@@ -3,6 +3,8 @@ package org.sid.tool.milestones.services;
 import org.sid.tool.models.Milestone;
 import org.sid.tool.repos.MilestonesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author siddesh
  * @since 12/Jan/2020
  */
+@Service
+@Transactional
 public class MilestonesServicesImpl implements MilestonesServices {
 
     /**

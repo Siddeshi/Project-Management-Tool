@@ -1,8 +1,6 @@
 package org.sid.tool.comments.services;
 
-import org.sid.tool.customexception.BacklogModificationException;
-import org.sid.tool.customexception.CommentNotFoundException;
-import org.sid.tool.customexception.ProjectModificationException;
+import org.sid.tool.customexception.*;
 import org.sid.tool.feature.services.ProductBacklogService;
 import org.sid.tool.models.Comment;
 import org.sid.tool.models.ProductBacklog;
@@ -161,5 +159,53 @@ public class CommentsServicesImpl implements CommentsServices {
             }
         }
         return "comment deleted";
+    }
+
+    /**
+     * Delete all the comments that belong to the project id and set the comments count to 0 in project
+     *
+     * @param projectId id of the project
+     * @return String returns desc of total number of comments deleted
+     */
+    @Override
+    public String deleteAllProjectComments(String projectId) {
+        ProjectDetails projectDetails = projectDetailsService.getProjectById(projectId);
+        if (projectDetails == null) {
+            throw new ProjectNotFoundException("Project not exist for the id-" + projectId);
+        } else {
+            List<Comment> comments = commentsRepository.findByProjectId(projectId);
+            for (Comment comment : comments
+            ) {
+                commentsRepository.delete(comment.get_id());
+            }
+            long count = projectDetails.getCommentsCount();
+            projectDetails.setCommentsCount(0);
+            projectDetailsService.updateProjectDetails(projectDetails);
+            return "Deleted " + count + " comments";
+        }
+    }
+
+    /**
+     * Delete all the comments that belong to the backlog id and set the comments count to 0 in project
+     *
+     * @param backlogId id of the backlog
+     * @return String returns desc of total number of comments deleted
+     */
+    @Override
+    public String deleteAllBacklogComments(String backlogId) {
+        ProductBacklog backlog = backlogService.findProductBacklogById(backlogId);
+        if (backlog == null) {
+            throw new BacklogNotFoundException("Backlog is not exist for the id-" + backlogId);
+        } else {
+            List<Comment> comments = commentsRepository.findByFeatureId(backlogId);
+            for (Comment comment : comments
+            ) {
+                commentsRepository.delete(comment.get_id());
+            }
+            long count = backlog.getCommentsCount();
+            backlog.setCommentsCount(0);
+            backlogService.updateBacklog(backlog);
+            return "Deleted " + count + " comments";
+        }
     }
 }
