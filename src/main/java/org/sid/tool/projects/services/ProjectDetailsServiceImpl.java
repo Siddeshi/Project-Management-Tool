@@ -94,10 +94,10 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
      */
     @Override
     public List<ProjectDetails> searchProjects(String searchStr) {
-        Query query = new Query();
-        query.limit(10);
-        query.addCriteria(Criteria.where("projectName").regex(searchStr));
-        return mongoTemplate.find(query, ProjectDetails.class);
+        return mongoTemplate.find(Query.query(new Criteria()
+                .orOperator(Criteria.where("projectName").regex(searchStr, "i"),
+                        Criteria.where("projectDesc").regex(searchStr, "i"))
+        ), ProjectDetails.class);
     }
 
     /**
@@ -113,5 +113,16 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
         } else {
             throw new ProjectNotFoundException("Project not found for the id-" + projectDetails.get_id());
         }
+    }
+
+    /**
+     * Get the project by its name
+     *
+     * @param name name of the project
+     * @return ProjectDetails
+     */
+    @Override
+    public ProjectDetails getProjectByProjectName(String name) {
+        return projectDetailsRepository.findByProjectName(name);
     }
 }

@@ -79,4 +79,39 @@ public class ProductBacklogController {
             return new ResponseEntity<>("prodcut backlog deleted", HttpStatus.OK);
         }
     }
+
+    @GetMapping(value = "/backlog/{id}")
+    @ApiOperation(value = "Get backlog", response = ProductBacklog.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Get the product backlog", response = ProductBacklog.class),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
+    public ResponseEntity<ProductBacklog> getBacklog(@PathVariable String backlogId) {
+        if (productBacklogService.findProductBacklogById(backlogId) == null) {
+            throw new BacklogNotFoundException("No backlog found for this id-" + backlogId);
+        } else {
+            return new ResponseEntity<>(productBacklogService.findProductBacklogById(backlogId), HttpStatus.OK);
+        }
+    }
+
+    @PutMapping(value = "/backlog/update")
+    @ApiOperation(value = "Update backlog", response = String.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Updated product backlog", response = String.class),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
+    public ResponseEntity<String> updateBacklog(@Valid @RequestBody ProductBacklog productBacklog) {
+        if (productBacklogService.findProductBacklogById(productBacklog.get_id()) == null) {
+            throw new BacklogNotFoundException("No backlog found for this id-" + productBacklog.get_id());
+        } else {
+            productBacklogService.updateBacklog(productBacklog);
+            return new ResponseEntity<>("Updated product backlog", HttpStatus.OK);
+        }
+    }
 }

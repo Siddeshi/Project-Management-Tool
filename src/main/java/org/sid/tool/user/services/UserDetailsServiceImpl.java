@@ -69,4 +69,37 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public void deleteUser(String id) {
         userDetailsRepo.delete(id);
     }
+
+    /**
+     * Check user existence by his/her name
+     *
+     * @param name
+     * @return boolean true/false
+     */
+    @Override
+    public boolean checkUserExists(String name) {
+        return userDetailsRepo.existsByUserName(name);
+    }
+
+    /**
+     * Check user is exists by his/her id
+     *
+     * @param id id of the user
+     * @return boolean true/false
+     */
+    @Override
+    public boolean checkUserExistsById(String id) {
+        return userDetailsRepo.exists(id);
+    }
+
+    /**
+     * Update user details
+     *
+     * @param userDetail user details
+     * @return UserDetail
+     */
+    @Override
+    public UserDetail updateUserDetails(UserDetail userDetail) {
+        return userDetailsRepo.save(userDetail);
+    }
 }

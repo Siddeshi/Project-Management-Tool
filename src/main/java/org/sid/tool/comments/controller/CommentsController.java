@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -59,9 +60,9 @@ public class CommentsController {
      * @param comment actual comment in string
      * @return String status
      */
-    @PostMapping(value = "/comments/projects/{projectId}/new")
-    public ResponseEntity<String> commentOnProject(@PathVariable String projectId, @RequestParam String userId,
-                                                   @RequestBody String comment) {
+    @PostMapping(value = "/comments/projects/new")
+    public ResponseEntity<String> commentOnProject(@RequestParam String projectId, @RequestParam String userId,
+                                                   @Valid @RequestBody String comment) {
         return new ResponseEntity<>(commentsServices.commentOnProject(comment, projectId, userId), HttpStatus.CREATED);
     }
 
@@ -72,8 +73,8 @@ public class CommentsController {
      * @param comment actual comment in string
      * @return String status
      */
-    @PostMapping(value = "/comments/backlogs/{featureId}/new")
-    public ResponseEntity<String> commentOnFeature(@PathVariable String featureId, @RequestParam String userId,
+    @PostMapping(value = "/comments/backlogs/new")
+    public ResponseEntity<String> commentOnFeature(@RequestParam String featureId, @RequestParam String userId,
                                                    @RequestBody String comment) {
         return new ResponseEntity<>(commentsServices.commentOnFeature(comment, featureId, userId), HttpStatus.CREATED);
     }

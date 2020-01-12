@@ -1,7 +1,6 @@
 package org.sid.tool.teams.services;
 
 import org.sid.tool.models.Team;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -13,9 +12,13 @@ import java.util.List;
  */
 public interface TeamsServices {
 
-    ResponseEntity<Team> findTeamById(String id);
+    Team findTeamById(String id);
 
-    ResponseEntity<List<Team>> listAllTeams();
+    List<Team> listAllTeams();
 
-    ResponseEntity<Team> addNewTeam(Team team);
+    void addNewTeam(Team team);
+
+    boolean checkTeamExistsByName(String name);
+
+    void deleteTeam(String id);
 }

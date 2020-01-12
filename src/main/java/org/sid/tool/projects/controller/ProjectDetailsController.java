@@ -4,11 +4,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.sid.tool.customexception.ProjectModificationException;
 import org.sid.tool.customexception.ProjectNotFoundException;
 import org.sid.tool.customexception.UserNotFoundException;
 import org.sid.tool.likes.services.LikesServices;
 import org.sid.tool.models.ProjectDetails;
-import org.sid.tool.models.UserDetail;
 import org.sid.tool.projects.services.ProjectDetailsService;
 import org.sid.tool.user.services.UserDetailsService;
 import org.slf4j.Logger;
@@ -81,7 +81,8 @@ public class ProjectDetailsController {
     }
 
     /**
-     * Api is to create a new project
+     * Api is to create a new project by user
+     * user id must exist in the database
      *
      * @param projectDetails accepts projects details as input request
      * @return String status
@@ -95,9 +96,17 @@ public class ProjectDetailsController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
-    public ResponseEntity<String> createNewProject(@Valid @RequestBody ProjectDetails projectDetails) {
-        detailsService.createNewProject(projectDetails);
-        return new ResponseEntity<>("added a new project", HttpStatus.CREATED);
+    public ResponseEntity<String> createNewProject(@Valid @RequestBody ProjectDetails projectDetails, @RequestParam String projectName, @RequestParam String userId) {
+        if (userDetailsService.findUserById(userId) == null) {
+            throw new UserNotFoundException("User is not exist ");
+        } else {
+            if (detailsService.getProjectByProjectName(projectName) != null) {
+                throw new ProjectModificationException("Project with this name is already exist-" + projectName);
+            } else {
+                detailsService.createNewProject(projectDetails);
+                return new ResponseEntity<>("added a new project", HttpStatus.CREATED);
+            }
+        }
     }
 
     /**
@@ -116,13 +125,17 @@ public class ProjectDetailsController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
-    public ResponseEntity<String> deleteProject(@PathVariable String id) {
-        ProjectDetails oldProject = detailsService.getProjectById(id);
-        if (oldProject == null) {
-            throw new ProjectNotFoundException("project not found for the id-" + id);
+    public ResponseEntity<String> deleteProject(@PathVariable String id, @RequestParam String userId) {
+        if (userDetailsService.findUserById(userId) == null) {
+            throw new UserNotFoundException("User is not exist");
         } else {
-            detailsService.deleteProjectById(id);
-            return new ResponseEntity<>("project deleted", HttpStatus.OK);
+            ProjectDetails oldProject = detailsService.getProjectById(id);
+            if (oldProject == null) {
+                throw new ProjectNotFoundException("project not found for the id-" + id);
+            } else {
+                detailsService.deleteProjectById(id);
+                return new ResponseEntity<>("project deleted", HttpStatus.OK);
+            }
         }
     }
 
@@ -167,8 +180,7 @@ public class ProjectDetailsController {
     }
     )
     public ResponseEntity<ProjectDetails> getProjectById(@PathVariable String projectId, @RequestParam String userId) {
-        UserDetail userDetail = userDetailsService.findUserById(userId);
-        if (userDetail == null) {
+        if (userDetailsService.findUserById(userId) == null) {
             throw new UserNotFoundException("User not found for the give id-" + userId);
         } else {
             ProjectDetails projectDetails = detailsService.getProjectById(projectId);

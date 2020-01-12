@@ -1,6 +1,8 @@
 package org.sid.tool.comments.services;
 
+import org.sid.tool.customexception.BacklogModificationException;
 import org.sid.tool.customexception.CommentNotFoundException;
+import org.sid.tool.customexception.ProjectModificationException;
 import org.sid.tool.feature.services.ProductBacklogService;
 import org.sid.tool.models.Comment;
 import org.sid.tool.models.ProductBacklog;
@@ -124,10 +126,14 @@ public class CommentsServicesImpl implements CommentsServices {
         if (comment == null) {
             throw new CommentNotFoundException("Comment not found for the id-" + commentId);
         } else {
-            commentsRepository.delete(commentId);
-            ProjectDetails projectDetails = projectDetailsService.getProjectById(projectId);
-            projectDetails.setCommentsCount(projectDetails.getCommentsCount() - 1);
-            projectDetailsService.updateProjectDetails(projectDetails);
+            if (!comment.getProjectId().equals(projectId)) {
+                throw new ProjectModificationException("Project id not match with the comment");
+            } else {
+                commentsRepository.delete(commentId);
+                ProjectDetails projectDetails = projectDetailsService.getProjectById(projectId);
+                projectDetails.setCommentsCount(projectDetails.getCommentsCount() - 1);
+                projectDetailsService.updateProjectDetails(projectDetails);
+            }
         }
         return "comment deleted";
     }
@@ -145,10 +151,14 @@ public class CommentsServicesImpl implements CommentsServices {
         if (comment == null) {
             throw new CommentNotFoundException("Comment not found for the id-" + commentId);
         } else {
-            commentsRepository.delete(commentId);
-            ProductBacklog productBacklog = backlogService.findProductBacklogById(featureId);
-            productBacklog.setCommentsCount(productBacklog.getCommentsCount() - 1);
-            backlogService.updateBacklog(productBacklog);
+            if (!comment.getFeatureId().equals(featureId)) {
+                throw new BacklogModificationException("Backlog id doesn't match with comment");
+            } else {
+                commentsRepository.delete(commentId);
+                ProductBacklog productBacklog = backlogService.findProductBacklogById(featureId);
+                productBacklog.setCommentsCount(productBacklog.getCommentsCount() - 1);
+                backlogService.updateBacklog(productBacklog);
+            }
         }
         return "comment deleted";
     }

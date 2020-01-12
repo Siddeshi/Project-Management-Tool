@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TeamRepository extends MongoRepository<Team, String> {
+
+    boolean existsByTeamName(String teamName);
 }

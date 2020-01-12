@@ -17,4 +17,9 @@ public interface UserDetailsService {
 
     void deleteUser(String id);
 
+    boolean checkUserExists(String name);
+
+    boolean checkUserExistsById(String id);
+
+    UserDetail updateUserDetails(UserDetail userDetail);
 }

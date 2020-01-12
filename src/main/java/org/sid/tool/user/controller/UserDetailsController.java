@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.sid.tool.customexception.UserModificationException;
 import org.sid.tool.customexception.UserNotFoundException;
 import org.sid.tool.models.UserDetail;
 import org.sid.tool.user.services.UserDetailsService;
@@ -103,9 +104,13 @@ public class UserDetailsController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
-    public ResponseEntity<String> createNewUser(@Valid @RequestBody UserDetail userDetail) {
-        userDetailsService.createNewUser(userDetail);
-        return new ResponseEntity<>("created new user", HttpStatus.CREATED);
+    public ResponseEntity<String> createNewUser(@Valid @RequestBody UserDetail userDetail, @RequestParam String username) {
+        if (userDetailsService.checkUserExists(username)) {
+            throw new UserModificationException("User with this name is already exists");
+        } else {
+            userDetailsService.createNewUser(userDetail);
+            return new ResponseEntity<>("created new user", HttpStatus.CREATED);
+        }
     }
 
     /**
@@ -124,11 +129,12 @@ public class UserDetailsController {
     }
     )
     public ResponseEntity<String> deleteUser(@PathVariable String id) {
-        UserDetail user = userDetailsService.findUserById(id);
-        if (user == null) {
+        if (!userDetailsService.checkUserExistsById(id)) {
             throw new UserNotFoundException("User not found for the given id-" + id);
-        } else
+        } else {
+            userDetailsService.deleteUser(id);
             return new ResponseEntity<>("deleted the user", HttpStatus.OK);
+        }
     }
 
     /**
@@ -148,11 +154,10 @@ public class UserDetailsController {
     }
     )
     public ResponseEntity<String> updateUser(@PathVariable String id, @Valid @RequestBody UserDetail userDetail) {
-        UserDetail user = userDetailsService.findUserById(id);
-        if (user == null) {
+        if (!userDetailsService.checkUserExistsById(id)) {
             throw new UserNotFoundException("User not found for the given id-" + id);
         } else {
-            userDetailsService.createNewUser(userDetail);
+            userDetailsService.updateUserDetails(userDetail);
         }
         return new ResponseEntity<>("updated user details", HttpStatus.OK);
     }

@@ -5,8 +5,6 @@ import org.sid.tool.repos.TeamRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,8 +37,8 @@ public class TeamsServicesImpl implements TeamsServices {
      */
     @Override
     @Transactional
-    public ResponseEntity<Team> findTeamById(String id) {
-        return new ResponseEntity<>(teamRepository.findOne(id), HttpStatus.OK);
+    public Team findTeamById(String id) {
+        return teamRepository.findOne(id);
     }
 
     /**
@@ -50,8 +48,8 @@ public class TeamsServicesImpl implements TeamsServices {
      */
     @Override
     @Transactional
-    public ResponseEntity<List<Team>> listAllTeams() {
-        return new ResponseEntity<>(teamRepository.findAll(), HttpStatus.OK);
+    public List<Team> listAllTeams() {
+        return teamRepository.findAll();
     }
 
     /**
@@ -62,7 +60,28 @@ public class TeamsServicesImpl implements TeamsServices {
      */
     @Override
     @Transactional
-    public ResponseEntity<Team> addNewTeam(Team team) {
-        return new ResponseEntity<>(teamRepository.save(team), HttpStatus.OK);
+    public void addNewTeam(Team team) {
+        teamRepository.save(team);
+    }
+
+    /**
+     * check if the team is already exist with this name
+     *
+     * @param name name of the team
+     * @return boolean true/false
+     */
+    @Override
+    public boolean checkTeamExistsByName(String name) {
+        return teamRepository.existsByTeamName(name);
+    }
+
+    /**
+     * Delete the team by its id
+     *
+     * @param id team id
+     */
+    @Override
+    public void deleteTeam(String id) {
+        teamRepository.delete(id);
     }
 }

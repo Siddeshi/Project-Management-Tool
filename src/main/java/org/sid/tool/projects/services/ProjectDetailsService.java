@@ -12,6 +12,8 @@ public interface ProjectDetailsService {
 
     ProjectDetails getProjectById(String id);
 
+    ProjectDetails getProjectByProjectName(String name);
+
     List<ProjectDetails> getAllProjects();
 
     ProjectDetails createNewProject(ProjectDetails projectDetails);
