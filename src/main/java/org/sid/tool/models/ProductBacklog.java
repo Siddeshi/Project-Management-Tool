@@ -21,26 +21,9 @@ public class ProductBacklog implements Serializable {
 
     private long commentsCount;
 
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "productBacklog", cascade = CascadeType.ALL)
     private List<ProjectDocument> projectDocuments;
 
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "productBacklog", cascade = CascadeType.ALL)
     private List<Task> tasks;
-
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private ProjectDetails projectDetails;
-
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private Team team;
-
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private Milestone milestone;
-
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "productBacklog", cascade = CascadeType.ALL)
-    //private List<Comment> comments;
 
     public ProductBacklog() {
     }

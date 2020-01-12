@@ -13,15 +13,30 @@ import org.sid.tool.user.services.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * LikesController is a @RestController class, it exposes REST endpoints for handling likes
+ *
+ * @author siddesh
+ * @since 09/Jan/2020
+ */
 @RestController
 @RequestMapping(value = "/")
 @Api(value = "tool", description = "Operations pertaining to Likes details")
 public class LikesController {
 
+    /**
+     * Autowiring the likes dao interface
+     */
     private final LikesServices likesServices;
 
+    /**
+     * Autowiring the user dao interface
+     */
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Autowiring the project dao interface
+     */
     private final ProjectDetailsService projectDetailsService;
 
     @Autowired
@@ -32,9 +47,15 @@ public class LikesController {
     }
 
 
+    /**
+     * Api is to like the project by user
+     *
+     * @param projectId id of the project
+     * @param userId    id of the user
+     * @return String status
+     */
     @PostMapping(value = "/like/project/{projectId}")
-    @ApiOperation(value = "Like project",
-            notes = "", response = String.class)
+    @ApiOperation(value = "Like project", response = String.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "liked", response = String.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -55,9 +76,15 @@ public class LikesController {
         }
     }
 
+    /**
+     * Api is to unlike the project by user
+     *
+     * @param projectId id of the project
+     * @param userId    id of the user
+     * @return String status
+     */
     @PutMapping(value = "/unlike/project/{projectId}")
-    @ApiOperation(value = "Unlike project",
-            notes = "", response = String.class)
+    @ApiOperation(value = "Unlike project", response = String.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "unliked", response = String.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -78,9 +105,14 @@ public class LikesController {
         }
     }
 
+    /**
+     * Api is to like the feature by user
+     * @param featureId id of the feature
+     * @param userId id of the user
+     * @return String status
+     */
     @PostMapping(value = "/like/feature/{featureId}")
-    @ApiOperation(value = "Like feature",
-            notes = "", response = String.class)
+    @ApiOperation(value = "Like feature", response = String.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "liked", response = String.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -100,9 +132,14 @@ public class LikesController {
         }
     }
 
+    /**
+     * Api is to unlike the feature by user
+     * @param featureId id of the feature
+     * @param userId id of the user
+     * @return String status
+     */
     @PutMapping(value = "/unlike/feature/{featureId}")
-    @ApiOperation(value = "Unlike feature",
-            notes = "", response = String.class)
+    @ApiOperation(value = "Unlike feature", response = String.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "unliked", response = String.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),

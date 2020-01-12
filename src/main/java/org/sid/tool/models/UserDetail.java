@@ -18,19 +18,6 @@ public class UserDetail implements Serializable {
     private String email;
     private String address;
 
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private Team team;
-
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "userDetail", cascade = CascadeType.ALL)
-    //private List<Comment> comments;
-
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "userDetail", cascade = CascadeType.ALL)
-    //private List<Like> likes;
-
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "userDetail", cascade = CascadeType.ALL)
-    //private List<Task> tasks;
-
     public UserDetail() {
     }
 

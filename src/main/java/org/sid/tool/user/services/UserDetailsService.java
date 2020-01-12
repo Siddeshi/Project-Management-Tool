@@ -4,9 +4,10 @@ import org.sid.tool.models.UserDetail;
 
 import java.util.List;
 
+/**
+ * Dao interface for user detail
+ */
 public interface UserDetailsService {
-
-    UserDetail findUserDetailsByName(String userName);
 
     UserDetail findUserById(String id);
 

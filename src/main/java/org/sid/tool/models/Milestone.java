@@ -17,16 +17,9 @@ public class Milestone implements Serializable {
 
     private String milestoneDesc;
 
-    //@OneToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(unique = true)
     private Timeline timeline;
 
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "milestone", cascade = CascadeType.ALL)
     private List<ProductBacklog> productBacklogs;
-
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private ProjectDetails projectDetails;
 
     public Milestone() {
     }

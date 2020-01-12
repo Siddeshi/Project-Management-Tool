@@ -4,6 +4,13 @@ import org.sid.tool.models.Comment;
 
 import java.util.List;
 
+
+/**
+ * The CommentsServices interface is for transaction management
+ *
+ * @author siddesh
+ * @since 09/Jan/2020
+ */
 public interface CommentsServices {
 
     List<Comment> getProjectCommentsList(String projectId);

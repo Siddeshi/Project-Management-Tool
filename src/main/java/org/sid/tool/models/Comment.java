@@ -23,18 +23,6 @@ public class Comment implements Serializable {
 
     private String featureId;
 
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private ProjectDetails projectDetails;
-
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private UserDetail userDetail;
-
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private ProductBacklog productBacklog;
-
     public Comment() {
         this.featureId = null;
         this.projectId = null;

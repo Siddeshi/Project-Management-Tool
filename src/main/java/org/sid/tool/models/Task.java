@@ -14,17 +14,7 @@ public class Task implements Serializable {
     private String taskName;
     private String taskDesc;
 
-    //@OneToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(unique = true)
     private Timeline timeline;
-
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private UserDetail userDetail;
-
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private ProductBacklog productBacklog;
 
     public Task() {
     }

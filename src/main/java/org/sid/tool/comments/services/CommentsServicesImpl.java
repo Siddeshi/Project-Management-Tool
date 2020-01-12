@@ -14,14 +14,29 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Dao layer implementation class is for handling comments related transactions
+ *
+ * @author siddesh
+ * @since 09/Jan/2020
+ */
 @Service
 @Transactional
 public class CommentsServicesImpl implements CommentsServices {
 
+    /**
+     * Autowiring the comments repository
+     */
     private final CommentsRepository commentsRepository;
 
+    /**
+     * Autowiring the project details dao interface
+     */
     private final ProjectDetailsService projectDetailsService;
 
+    /**
+     * Autowiring the prodcut backlog dao interface
+     */
     private final ProductBacklogService backlogService;
 
     @Autowired
@@ -32,16 +47,35 @@ public class CommentsServicesImpl implements CommentsServices {
         this.backlogService = backlogService;
     }
 
+    /**
+     * Get list of all comments on the project
+     *
+     * @param projectId id of the project
+     * @return List<Comment> list of comments
+     */
     @Override
     public List<Comment> getProjectCommentsList(String projectId) {
         return commentsRepository.findByProjectId(projectId);
     }
 
+    /**
+     * Get list of all comments on the product backlog
+     *
+     * @param featureId id of the product backlog
+     * @return List<Comment> list of comments
+     */
     @Override
     public List<Comment> getFeatureCommentsList(String featureId) {
         return commentsRepository.findByFeatureId(featureId);
     }
 
+    /**
+     * Add a new comment on the project
+     * @param comment actual comment in string
+     * @param projectId id of the project
+     * @param userId id of the user who commented
+     * @return String status
+     */
     @Override
     public String commentOnProject(String comment, String projectId, String userId) {
         Comment newComment = new Comment();
@@ -56,6 +90,13 @@ public class CommentsServicesImpl implements CommentsServices {
         return "new comment added";
     }
 
+    /**
+     * Add a new comment on the product backlog
+     * @param comment actual comment in string
+     * @param featureId id of the product backlog
+     * @param userId id of the user who commented
+     * @return String status
+     */
     @Override
     public String commentOnFeature(String comment, String featureId, String userId) {
         Comment newComment = new Comment();
@@ -70,6 +111,13 @@ public class CommentsServicesImpl implements CommentsServices {
         return "new comment added";
     }
 
+    /**
+     * Delete a comment on the project
+     * @param projectId id of the project
+     * @param commentId id of the comment
+     * @return String status
+     * @exception CommentNotFoundException throws this when id of the comment is not found in the repository
+     */
     @Override
     public String deleteProjectComment(String projectId, String commentId) {
         Comment comment = commentsRepository.findOne(commentId);
@@ -84,6 +132,13 @@ public class CommentsServicesImpl implements CommentsServices {
         return "comment deleted";
     }
 
+    /**
+     * Delete a comment on the product backlog
+     * @param featureId id of the product backlog
+     * @param commentId id the of the comment
+     * @return String status
+     * @exception CommentNotFoundException throws this when id of the comment is not found in the repository
+     */
     @Override
     public String deleteFeatureComment(String featureId, String commentId) {
         Comment comment = commentsRepository.findOne(commentId);

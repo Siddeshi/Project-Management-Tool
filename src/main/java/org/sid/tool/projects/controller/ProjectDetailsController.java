@@ -21,6 +21,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * The ProjectDetailsController is the @RestController class that exposes rest endpoints
+ * for the end users to handle the projects
+ *
+ * @author siddesh
+ * @since 08/Jan/2020
+ */
 @RestController
 @RequestMapping(value = "/")
 @Api(value = "tool", description = "Operations pertaining to project details")
@@ -28,24 +35,36 @@ public class ProjectDetailsController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    /**
+     * Autowiring project details dao layer
+     */
     private final ProjectDetailsService detailsService;
 
+    /**
+     * Autowiring likes dao layer
+     */
     private final LikesServices likesServices;
 
+    /**
+     * Autowiring user details dao layer
+     */
     private final UserDetailsService userDetailsService;
 
+    @Autowired
     public ProjectDetailsController(ProjectDetailsService detailsService, LikesServices likesServices, UserDetailsService userDetailsService) {
         this.detailsService = detailsService;
         this.likesServices = likesServices;
         this.userDetailsService = userDetailsService;
     }
 
-    @Autowired
-
-
+    /**
+     * Api is to list all the projects
+     *
+     * @return List<ProjectDetails> list of projects
+     * @throws ProjectNotFoundException throws this when list is empty
+     */
     @GetMapping(value = "/projects/list", produces = "application/json")
-    @ApiOperation(value = "List all projects",
-            notes = "", response = List.class)
+    @ApiOperation(value = "List all projects", response = List.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list", response = ProjectDetails.class, responseContainer = "List"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -61,9 +80,14 @@ public class ProjectDetailsController {
             return new ResponseEntity<>(projectsList, HttpStatus.OK);
     }
 
+    /**
+     * Api is to create a new project
+     *
+     * @param projectDetails accepts projects details as input request
+     * @return String status
+     */
     @PostMapping(value = "/projects/new", produces = "application/json", consumes = "application/json")
-    @ApiOperation(value = "Add new project",
-            notes = "", response = ProjectDetails.class)
+    @ApiOperation(value = "Add new project", response = ProjectDetails.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successfully added new project", response = ProjectDetails.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -71,13 +95,20 @@ public class ProjectDetailsController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
-    public ResponseEntity<ProjectDetails> createNewProject(@Valid @RequestBody ProjectDetails projectDetails) {
-        return new ResponseEntity<>(detailsService.createNewProject(projectDetails), HttpStatus.CREATED);
+    public ResponseEntity<String> createNewProject(@Valid @RequestBody ProjectDetails projectDetails) {
+        detailsService.createNewProject(projectDetails);
+        return new ResponseEntity<>("added a new project", HttpStatus.CREATED);
     }
 
+    /**
+     * Api is to delete a project based on its id
+     *
+     * @param id id of the project
+     * @return String status
+     * @throws ProjectNotFoundException throws when id doesn't exist
+     */
     @DeleteMapping(value = "/projects/delete/{id}", produces = "application/json")
-    @ApiOperation(value = "Delete project",
-            notes = "", response = ProjectDetails.class)
+    @ApiOperation(value = "Delete project", response = ProjectDetails.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted the project", response = ProjectDetails.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -85,19 +116,23 @@ public class ProjectDetailsController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
-    public ResponseEntity<ProjectDetails> deleteProject(@PathVariable String id) {
+    public ResponseEntity<String> deleteProject(@PathVariable String id) {
         ProjectDetails oldProject = detailsService.getProjectById(id);
         if (oldProject == null) {
             throw new ProjectNotFoundException("project not found for the id-" + id);
         } else {
             detailsService.deleteProjectById(id);
-            return new ResponseEntity<>(oldProject, HttpStatus.OK);
+            return new ResponseEntity<>("project deleted", HttpStatus.OK);
         }
     }
 
+    /**
+     * Api is to search for projects by name
+     * @param query substring of project name
+     * @return List<ProjectDetails> it returns all the projects that matches with with query
+     */
     @GetMapping(value = "/projects", produces = "application/json")
-    @ApiOperation(value = "Search projects",
-            notes = "", response = List.class)
+    @ApiOperation(value = "Search projects", response = List.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Projects found for the given criteria", response = ProjectDetails.class, responseContainer = "List"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -114,9 +149,16 @@ public class ProjectDetailsController {
         }
     }
 
+    /**
+     * APi is to fetch a particular project based on its id
+     * @param projectId id of the project
+     * @param userId id of the user who wants to access
+     * @return ProjectDetails
+     * @exception UserNotFoundException throws if the user is not found
+     * @exception ProjectNotFoundException throws if the project is not found
+     */
     @GetMapping(value = "/projects/{projectId}", produces = "application/json")
-    @ApiOperation(value = "Search project by id",
-            notes = "", response = List.class)
+    @ApiOperation(value = "Search project by id", response = List.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved the project", response = ProjectDetails.class, responseContainer = "List"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -136,6 +178,5 @@ public class ProjectDetailsController {
                 return new ResponseEntity<>(projectDetails, HttpStatus.OK);
             }
         }
-
     }
 }

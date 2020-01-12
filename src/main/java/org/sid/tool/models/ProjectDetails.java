@@ -28,23 +28,11 @@ public class ProjectDetails implements Serializable {
 
     private long commentsCount;
 
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
     private List<Team> teams;
 
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
     private List<Milestone> milestones;
 
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
-    //private List<Comment> comments;
-
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
     private List<ProjectDocument> projectDocuments;
-
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
-    //private List<Like> likes;
-
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "projectDetails", cascade = CascadeType.ALL)
-    //private List<ProductBacklog> productBacklogs;
 
     public ProjectDetails() {
     }

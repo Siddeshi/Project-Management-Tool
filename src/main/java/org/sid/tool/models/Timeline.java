@@ -17,12 +17,6 @@ public class Timeline implements Serializable {
 
     private Date periodTo;
 
-    //@OneToOne(mappedBy = "timeline")
-    //private Milestone milestone;
-
-    //@OneToOne(mappedBy = "timeline")
-    //private Task task;
-
     public Timeline() {
     }
 

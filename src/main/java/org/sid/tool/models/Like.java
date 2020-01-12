@@ -13,16 +13,10 @@ public class Like implements Serializable {
     @Id
     private ObjectId _id;
 
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
     private String projectId;
 
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
     private String userId;
 
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
     private String featureId;
 
     public Like() {

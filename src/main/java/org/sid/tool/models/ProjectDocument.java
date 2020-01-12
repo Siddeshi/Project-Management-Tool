@@ -18,14 +18,6 @@ public class ProjectDocument implements Serializable {
 
     private byte[] document;
 
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private ProjectDetails projectDetails;
-
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private ProductBacklog productBacklog;
-
     public ProjectDocument() {
     }
 

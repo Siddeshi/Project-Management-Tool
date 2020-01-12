@@ -13,14 +13,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Implementation class for dao interface, it manages the project and backlog transactions
+ *
+ * @author siddesh
+ * @since 09/Jan/2020
+ */
 @Service
 @Transactional
 public class LikesServicesImpl implements LikesServices {
 
+    /**
+     * Autowiring the likes repo
+     */
     private final LikesRepository likesRepository;
 
+    /**
+     * Autowiring the project details dao interface
+     */
     private final ProjectDetailsService projectDetailsService;
 
+    /**
+     * Autowiring the backlog dao interface
+     */
     private final ProductBacklogService backlogService;
 
     @Autowired
@@ -31,16 +46,34 @@ public class LikesServicesImpl implements LikesServices {
         this.backlogService = backlogService;
     }
 
+    /**
+     * Get list of all likes on the project
+     *
+     * @param projectId id of the project
+     * @return List<Like> returns list of likes
+     */
     @Override
     public List<Like> getProjectLikesList(String projectId) {
         return likesRepository.findByProjectId(projectId);
     }
 
+    /**
+     * Get list of all likes on the feature
+     *
+     * @param featureId id of the feature
+     * @return List<Like> list of likes
+     */
     @Override
     public List<Like> getFeatureLikesList(String featureId) {
         return likesRepository.findByFeatureId(featureId);
     }
 
+    /**
+     * To check whether the project is liked by the user
+     * @param projectId id of the project
+     * @param userId id of the user
+     * @return boolean true/false
+     */
     @Override
     public boolean checkProjectLiked(String projectId, String userId) {
 
@@ -48,13 +81,25 @@ public class LikesServicesImpl implements LikesServices {
         return like != null;
     }
 
+    /**
+     * To check whether the feature is liked by user or not
+     * @param featureId id of the feature
+     * @param userId id of the user
+     * @return boolean true/false
+     */
     @Override
-    public boolean checkFeatureLiked(String featureid, String userId) {
-        Like like = likesRepository.findByFeatureIdAndUserId(featureid, userId);
+    public boolean checkFeatureLiked(String featureId, String userId) {
+        Like like = likesRepository.findByFeatureIdAndUserId(featureId, userId);
         return like != null;
     }
 
 
+    /**
+     * When user likes the project and an entry
+     * @param projectId id of the project
+     * @param userId id of the user
+     * @return String status
+     */
     @Override
     public String likeProject(String projectId, String userId) {
         if (this.checkProjectLiked(projectId, userId)) {
@@ -71,6 +116,12 @@ public class LikesServicesImpl implements LikesServices {
         }
     }
 
+    /**
+     * When user likes the backlog add an entry
+     * @param featureId id of the backlog
+     * @param userId id of the user
+     * @return String status
+     */
     @Override
     public String likeFeature(String featureId, String userId) {
         if (this.checkFeatureLiked(featureId, userId)) {
@@ -87,6 +138,12 @@ public class LikesServicesImpl implements LikesServices {
         }
     }
 
+    /**
+     * When user unlike the project remove an entry from repo
+     * @param projectId id of the project
+     * @param userId id of the user
+     * @return String status
+     */
     @Override
     public String unlikeProject(String projectId, String userId) {
         if (this.checkProjectLiked(projectId, userId)) {
@@ -105,10 +162,16 @@ public class LikesServicesImpl implements LikesServices {
         return "unliked";
     }
 
+    /**
+     * When user unlikes the backlog, remove an entry from repo
+     * @param featureId id of the backlog
+     * @param userId id of the user
+     * @return String status
+     */
     @Override
-    public String unlikeFeature(String featureId, String userid) {
-        if (this.checkFeatureLiked(featureId, userid)) {
-            Like like = this.getLikedFeature(featureId, userid);
+    public String unlikeFeature(String featureId, String userId) {
+        if (this.checkFeatureLiked(featureId, userId)) {
+            Like like = this.getLikedFeature(featureId, userId);
             if (like.getProjectId() != null) {
                 like.setFeatureId(null);
             } else {
@@ -123,16 +186,32 @@ public class LikesServicesImpl implements LikesServices {
         return "unliked";
     }
 
+    /**
+     * For getting project like entry from repo using
+     * @param projectId id of the project
+     * @param userId id of the user
+     * @return Like
+     */
     @Override
     public Like getLikedProject(String projectId, String userId) {
         return likesRepository.findByProjectIdAndUserId(projectId, userId);
     }
 
+    /**
+     * For getting backlog like entry from repo
+     * @param featureId id of the backlog
+     * @param userId id of the user
+     * @return Like
+     */
     @Override
     public Like getLikedFeature(String featureId, String userId) {
         return likesRepository.findByFeatureIdAndUserId(featureId, userId);
     }
 
+    /**
+     * Delete like entry of both project and backlog
+     * @param id id of like
+     */
     @Override
     public void deleteLike(String id) {
         likesRepository.delete(id);

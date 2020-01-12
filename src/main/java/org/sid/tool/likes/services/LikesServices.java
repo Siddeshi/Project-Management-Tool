@@ -4,6 +4,9 @@ import org.sid.tool.models.Like;
 
 import java.util.List;
 
+/**
+ * Dao interface for project and backlog likes management
+ */
 public interface LikesServices {
 
     List<Like> getProjectLikesList(String projectId);

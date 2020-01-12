@@ -17,15 +17,7 @@ public class Team implements Serializable {
 
     private String teamDesc;
 
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "_id")
-    //private ProjectDetails projectDetails;
-
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "team", cascade = CascadeType.ALL)
     private List<UserDetail> userDetail;
-
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "team", cascade = CascadeType.ALL)
-    //private List<ProductBacklog> productBacklogs;
 
     public Team() {
     }

@@ -4,6 +4,10 @@ import org.sid.tool.models.ProjectDetails;
 
 import java.util.List;
 
+
+/**
+ * Dao interface for projects transaction handling.
+ */
 public interface ProjectDetailsService {
 
     ProjectDetails getProjectById(String id);
