@@ -3,11 +3,12 @@ Tool is to manage the projects that are being developed in an organisation
 
 The tool is developed as a standalone spring boot application
 
-####Required to softwares to run this app
+#### System requirement to run this app
     1. Maven 3.3.9
     2. MongoDB shell version v3.6.4 
+    3. Java version 1.8 or above
     
-####Running guidelines
+#### Running guidelines
 - make sure maven home is set 
 - start your mongodb server and create new DB `project_management_tool` and create a new user
 
