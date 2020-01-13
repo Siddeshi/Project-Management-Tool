@@ -23,11 +23,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     /**
      * Autowiring the user repo
      */
-    private final UserDetailsRepository userDetailsRepo;
+    private UserDetailsRepository userDetailsRepo;
 
     @Autowired
     public UserDetailsServiceImpl(UserDetailsRepository userDetailsRepo) {
         this.userDetailsRepo = userDetailsRepo;
+    }
+
+    public UserDetailsServiceImpl() {
     }
 
     /**

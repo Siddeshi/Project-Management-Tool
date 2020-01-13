@@ -22,11 +22,14 @@ public class TeamsServicesImpl implements TeamsServices {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
 
-    private final TeamRepository teamRepository;
+    private TeamRepository teamRepository;
 
     @Autowired
     public TeamsServicesImpl(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
+    }
+
+    public TeamsServicesImpl() {
     }
 
     /**

@@ -28,18 +28,20 @@ public class ProjectDetailsServiceImpl implements ProjectDetailsService {
     /**
      * Autowiring the project repository
      */
-    private final ProjectDetailsRepository projectDetailsRepository;
-
+    private ProjectDetailsRepository projectDetailsRepository;
 
     /**
      * Autowiring the default mongo template
      */
-    private final MongoTemplate mongoTemplate;
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     public ProjectDetailsServiceImpl(ProjectDetailsRepository projectDetailsRepository, MongoTemplate mongoTemplate) {
         this.projectDetailsRepository = projectDetailsRepository;
         this.mongoTemplate = mongoTemplate;
+    }
+
+    public ProjectDetailsServiceImpl() {
     }
 
     /**

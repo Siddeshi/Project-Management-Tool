@@ -87,7 +87,7 @@ public class ProjectDetailsController {
      * @param projectDetails accepts projects details as input request
      * @return String status
      */
-    @PostMapping(value = "/projects/new", produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/projects/new", consumes = "application/json")
     @ApiOperation(value = "Add new project", response = ProjectDetails.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successfully added new project", response = ProjectDetails.class),
@@ -112,11 +112,11 @@ public class ProjectDetailsController {
     /**
      * Api is to delete a project based on its id
      *
-     * @param id id of the project
+     * @param projectId id of the project
      * @return String status
      * @throws ProjectNotFoundException throws when id doesn't exist
      */
-    @DeleteMapping(value = "/projects/delete/{id}", produces = "application/json")
+    @DeleteMapping(value = "/projects/delete/{projectId}")
     @ApiOperation(value = "Delete project", response = ProjectDetails.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted the project", response = ProjectDetails.class),
@@ -125,15 +125,15 @@ public class ProjectDetailsController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
-    public ResponseEntity<String> deleteProject(@PathVariable String id, @RequestParam String userId) {
+    public ResponseEntity<String> deleteProject(@PathVariable String projectId, @RequestParam String userId) {
         if (userDetailsService.findUserById(userId) == null) {
             throw new UserNotFoundException("User is not exist");
         } else {
-            ProjectDetails oldProject = detailsService.getProjectById(id);
+            ProjectDetails oldProject = detailsService.getProjectById(projectId);
             if (oldProject == null) {
-                throw new ProjectNotFoundException("project not found for the id-" + id);
+                throw new ProjectNotFoundException("project not found for the id-" + projectId);
             } else {
-                detailsService.deleteProjectById(id);
+                detailsService.deleteProjectById(projectId);
                 return new ResponseEntity<>("project deleted", HttpStatus.OK);
             }
         }

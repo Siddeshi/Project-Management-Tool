@@ -30,4 +30,8 @@ public interface LikesServices {
     Like getLikedFeature(String featureId, String userId);
 
     void deleteLike(String id);
+
+    String deleteAllProjectLikes(String projectId);
+
+    String deleteAllBacklogLikes(String backlogId);
 }

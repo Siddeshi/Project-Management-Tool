@@ -5,7 +5,6 @@ import org.sid.tool.models.ProductBacklog;
 import org.sid.tool.repos.ProductBacklogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation class for dao, it manages the transaction of product backlogs
@@ -14,17 +13,19 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 09/Jan/2020
  */
 @Service
-@Transactional
 public class ProductBacklogServiceImpl implements ProductBacklogService {
 
     /**
      * Autowiring the repository
      */
-    private final ProductBacklogRepository backlogRepository;
+    private ProductBacklogRepository backlogRepository;
 
     @Autowired
     public ProductBacklogServiceImpl(ProductBacklogRepository backlogRepository) {
         this.backlogRepository = backlogRepository;
+    }
+
+    public ProductBacklogServiceImpl() {
     }
 
     /**

@@ -21,11 +21,14 @@ public class MilestonesServicesImpl implements MilestonesServices {
     /**
      * Autowiring the milestone repo
      */
-    private final MilestonesRepository milestonesRepository;
+    private MilestonesRepository milestonesRepository;
 
     @Autowired
     public MilestonesServicesImpl(MilestonesRepository milestonesRepository) {
         this.milestonesRepository = milestonesRepository;
+    }
+
+    public MilestonesServicesImpl() {
     }
 
     /**

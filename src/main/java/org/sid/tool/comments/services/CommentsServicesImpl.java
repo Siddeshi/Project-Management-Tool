@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,17 +27,17 @@ public class CommentsServicesImpl implements CommentsServices {
     /**
      * Autowiring the comments repository
      */
-    private final CommentsRepository commentsRepository;
+    private CommentsRepository commentsRepository;
 
     /**
      * Autowiring the project details dao interface
      */
-    private final ProjectDetailsService projectDetailsService;
+    private ProjectDetailsService projectDetailsService;
 
     /**
      * Autowiring the prodcut backlog dao interface
      */
-    private final ProductBacklogService backlogService;
+    private ProductBacklogService backlogService;
 
     @Autowired
     public CommentsServicesImpl(CommentsRepository commentsRepository, ProjectDetailsService projectDetailsService,

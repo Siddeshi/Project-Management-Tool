@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.sid.tool.comments.services.CommentsServices;
+import org.sid.tool.customexception.CommentNotFoundException;
 import org.sid.tool.models.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,7 +53,11 @@ public class CommentsController {
     }
     )
     public ResponseEntity<List<Comment>> getProjectComments(@PathVariable String projectId) {
-        return new ResponseEntity<>(commentsServices.getProjectCommentsList(projectId), HttpStatus.OK);
+        List<Comment> comments = commentsServices.getProjectCommentsList(projectId);
+        if (comments.size() == 0) {
+            throw new CommentNotFoundException("No comments found for this project");
+        } else
+            return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     /**
@@ -71,7 +76,11 @@ public class CommentsController {
     }
     )
     public ResponseEntity<List<Comment>> getFeatureComments(@PathVariable String featureId) {
-        return new ResponseEntity<>(commentsServices.getFeatureCommentsList(featureId), HttpStatus.OK);
+        List<Comment> comments = commentsServices.getFeatureCommentsList(featureId);
+        if (comments.size() == 0) {
+            throw new CommentNotFoundException("No comments for this backlog");
+        } else
+            return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     /**

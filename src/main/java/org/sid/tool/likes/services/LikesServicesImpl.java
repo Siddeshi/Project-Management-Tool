@@ -1,6 +1,8 @@
 package org.sid.tool.likes.services;
 
+import org.sid.tool.customexception.BacklogNotFoundException;
 import org.sid.tool.customexception.LikeNotFoundException;
+import org.sid.tool.customexception.ProjectNotFoundException;
 import org.sid.tool.feature.services.ProductBacklogService;
 import org.sid.tool.models.Like;
 import org.sid.tool.models.ProductBacklog;
@@ -26,17 +28,17 @@ public class LikesServicesImpl implements LikesServices {
     /**
      * Autowiring the likes repo
      */
-    private final LikesRepository likesRepository;
+    private LikesRepository likesRepository;
 
     /**
      * Autowiring the project details dao interface
      */
-    private final ProjectDetailsService projectDetailsService;
+    private ProjectDetailsService projectDetailsService;
 
     /**
      * Autowiring the backlog dao interface
      */
-    private final ProductBacklogService backlogService;
+    private ProductBacklogService backlogService;
 
     @Autowired
     public LikesServicesImpl(LikesRepository likesRepository, ProjectDetailsService projectDetailsService,
@@ -44,6 +46,9 @@ public class LikesServicesImpl implements LikesServices {
         this.likesRepository = likesRepository;
         this.projectDetailsService = projectDetailsService;
         this.backlogService = backlogService;
+    }
+
+    public LikesServicesImpl() {
     }
 
     /**
@@ -215,5 +220,50 @@ public class LikesServicesImpl implements LikesServices {
     @Override
     public void deleteLike(String id) {
         likesRepository.delete(id);
+    }
+
+    /**
+     * Delete all the likes from the project
+     *
+     * @param projectId id of the project
+     */
+    @Override
+    public String deleteAllProjectLikes(String projectId) {
+        ProjectDetails projectDetails = projectDetailsService.getProjectById(projectId);
+        if (projectDetails == null) {
+            throw new ProjectNotFoundException("Project is not exist");
+        } else {
+            List<Like> likes = likesRepository.findByProjectId(projectId);
+            long likesCount = likes.size();
+            for (Like like : likes
+            ) {
+                likesRepository.delete(like.get_id());
+            }
+            projectDetails.setLikesCount(likesCount);
+            projectDetailsService.updateProjectDetails(projectDetails);
+            return "Deleted " + likesCount + " likes";
+        }
+    }
+
+    /**
+     * Delete all the likes from backlog
+     *
+     * @param backlogId id of backlog
+     * @return String returns count
+     */
+    public String deleteAllBacklogLikes(String backlogId) {
+        ProductBacklog backlog = backlogService.findProductBacklogById(backlogId);
+        if (backlog == null) {
+            throw new BacklogNotFoundException("Backlog is not exist");
+        } else {
+            List<Like> likes = likesRepository.findByFeatureId(backlogId);
+            long count = likes.size();
+            for (Like like : likes) {
+                likesRepository.delete(like);
+            }
+            backlog.setLikesCount(count);
+            backlogService.updateBacklog(backlog);
+            return "Deleted " + count + " likes";
+        }
     }
 }
